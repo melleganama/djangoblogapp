@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+    <h3> Control Pannel</h3>
+    <hr>
+
+    <p> Welcome Back {{ request.user.username }}</p>
+
+    <hr>
+
+    <a class="btn btn-danger" href="{% url 'article:addarticle' %}"> Add Article</a>
+
+    <hr>
+
+    {% if articles is None %}
+
+        <div class="alert alert-danger">
+            <h4> You do not have any article Yet</h4>
+        </div>
+    
+    {% else %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                {% for article in articles %}
+                    <tr>
+                        <th scope="row">{{ article.id }}</th>
+                        <td> 
+                            <a href="{% url 'article:detail' article.id %}"> {{ article.title }} </a> 
+                        </td>
+                        <td>{{ article.author.username  }}</td>
+                        <td>{{ article.created_date }}</td>
+                        <td> <a  class="btn btn-info " href="{% url 'article:update' article.id %}"> Update</a> </td>
+                        <td> <a  class="btn btn-danger" href="{% url 'article:delete' article.id %}"> Delete</a> </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% endif %}
+     
+{% endblock body %}
+
+
+
